@@ -8,7 +8,10 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 const app = express();
 
 // Set the bot API endpoint
-app.use(await bot.createWebhook({ domain: process.env.DOMAIN }));
+app.use(await bot.createWebhook({
+    domain: process.env.DOMAIN,
+    path: '/telegram',
+}));
 
 bot.on("text", ctx => ctx.reply("Hello"));
 
