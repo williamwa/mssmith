@@ -4,6 +4,13 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
+import { Configuration, OpenAIApi } from 'openai';
+
+const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+const openai = new OpenAIApi(configuration);
+
 const bot = new Telegraf(process.env.BOT_TOKEN);
 const app = express();
 
@@ -13,6 +20,19 @@ app.use(await bot.createWebhook({
     path: '/telegram',
 }));
 
-bot.on("text", ctx => ctx.reply("Hello"));
+bot.on("text", async ctx => {
+    const question = ctx.message.text;
+
+    const completion = await openai.createCompletion({
+        model: "gpt-3.5-turbo",
+        messages:[
+            { role: 'user', content: question}
+        ]
+    });
+    const answer = completion.data.choices[0].message.content
+    console.log(question, answer);
+    
+    ctx.reply(answer)
+});
 
 app.listen(process.env.PORT, () => console.log("Listening on port", process.env.PORT));
