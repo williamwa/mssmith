@@ -12,4 +12,4 @@ app.use(await bot.createWebhook({ domain: process.env.DOMAIN }));
 
 bot.on("text", ctx => ctx.reply("Hello"));
 
-app.listen(port, () => console.log("Listening on port", process.env.PORT));
+app.listen(process.env.PORT, () => console.log("Listening on port", process.env.PORT));
