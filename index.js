@@ -1,7 +1,8 @@
 import express from "express";
 import { Telegraf } from "telegraf";
+import * as dotenv from 'dotenv';
 
-require('dotenv').config();
+dotenv.config();
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 const app = express();
