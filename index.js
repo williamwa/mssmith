@@ -34,7 +34,7 @@ bot.on("text", async ctx => {
         ],
     });
     const answer = completion.data.choices[0].message.content
-    console.log(question, answer);
+    //console.log(question, answer);
 
     ctx.reply(answer)
 });
