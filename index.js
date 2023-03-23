@@ -23,13 +23,15 @@ app.use(await bot.createWebhook({
 bot.on("text", async ctx => {
     const question = ctx.message.text;
 
-    const completion = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: "Hello world",
+    const completion = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [
+            { role: 'user', content: question }
+        ],
     });
-    const answer = completion.data.choices[0].text
+    const answer = completion.data.choices[0].message.content
     console.log(question, answer);
-    
+
     ctx.reply(answer)
 });
 
