@@ -20,6 +20,10 @@ app.use(await bot.createWebhook({
     path: '/telegram',
 }));
 
+bot.start(ctx => {
+    return ctx.reply(`hello from Ms. Smith: ${ctx.update.message.from.first_name}!`);
+});
+
 bot.on("text", async ctx => {
     const question = ctx.message.text;
 
