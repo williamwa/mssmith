@@ -24,12 +24,10 @@ bot.on("text", async ctx => {
     const question = ctx.message.text;
 
     const completion = await openai.createCompletion({
-        model: "gpt-3.5-turbo",
-        messages:[
-            { role: 'user', content: question}
-        ]
+        model: "text-davinci-003",
+        prompt: "Hello world",
     });
-    const answer = completion.data.choices[0].message.content
+    const answer = completion.data.choices[0].text
     console.log(question, answer);
     
     ctx.reply(answer)
