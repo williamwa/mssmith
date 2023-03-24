@@ -1,7 +1,7 @@
 import express from "express";
 import { Telegraf } from "telegraf";
 import * as dotenv from 'dotenv';
-import * as cache from 'memory-cache';
+import { default as cache } from 'memory-cache';
 
 dotenv.config();
 
