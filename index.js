@@ -27,6 +27,8 @@ bot.start(ctx => {
 bot.on("text", async ctx => {
     const question = ctx.message.text;
 
+    console.log('message', ctx.message);
+
     const completion = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [
