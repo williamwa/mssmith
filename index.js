@@ -41,7 +41,7 @@ bot.on("text", async ctx => {
     });
     const answer = completion.data.choices[0].message.content;
 
-    messages = messages.push({ role: 'system', content: answer });
+    messages.push({ role: 'system', content: answer });
     //console.log(question, answer);
 
     if(messages.length > 10){
