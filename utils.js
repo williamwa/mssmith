@@ -70,7 +70,7 @@ export async function ogaBuffer2Mp3Buffer(buffer){
     outputData = ffmpeg.FS('readFile', outputFileName);
 
     console.log(outputData);
-    
+
     ffmpeg.FS('unlink', inputFileName);
     ffmpeg.FS('unlink', outputFileName);
 
@@ -114,7 +114,7 @@ export async function getFileFromVoiceAndConvertToMp3(bot, voice){
 
     const ogaab = await fileToab(filePath);
 
-    const mp3ab = ogaBuffer2Mp3Buffer(ogaab);
+    const mp3ab = await ogaBuffer2Mp3Buffer(ogaab);
 
     const mp3file = await abToFile(mp3ab, `/tmp/${voice.file_id}.mp3`);
 
