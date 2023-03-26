@@ -94,7 +94,7 @@ export async function getFileFromVoiceAndConvertToMp3(bot, voice){
 
     const ab = await fetchFileToAB(fileLink);
 
-    const mp3file = await abToFile(ab, `/tmp/${vovoice.file_id}.mp3`);
+    const mp3file = await abToFile(ab, `/tmp/${voice.file_id}.mp3`);
 
     return mp3file;
 }
