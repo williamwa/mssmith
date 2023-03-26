@@ -1,5 +1,5 @@
-import * as fs from "fs";
-import * as got from 'got';
+import fs from 'node:fs';
+import got from 'got';
 
 export async function getFileFromVoice(bot, voice){
     const fileId = voice.file_id
