@@ -59,7 +59,7 @@ bot.on("voice", async ctx => {
 
     const voice = ctx.message.voice
 
-    const filePath = await getFileFromVoice(voice);
+    const filePath = await getFileFromVoice(bot, voice);
 
     console.log(filePath);
 
