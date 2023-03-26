@@ -1,4 +1,5 @@
 import express from "express";
+import fs from 'node:fs';
 import { Telegraf } from "telegraf";
 import * as dotenv from 'dotenv';
 import { default as cache } from 'memory-cache';
@@ -62,7 +63,7 @@ bot.on("voice", async ctx => {
 
     console.log('mp3 file', mp3file);
 
-    const transcription = await openai.createTranscription(mp3file, 'whisper-1');
+    const transcription = await openai.createTranscription(fs.createReadStream(mp3file), 'whisper-1');
 
     console.log(transcription);
 
