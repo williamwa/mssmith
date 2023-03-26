@@ -37,7 +37,7 @@ export async function downloadFile(fileUrl, filePath) {
             got.stream(fileUrl)
                 .pipe(fs.createWriteStream(filePath))
                 .on('close', function () {
-                    console.log('File written!', filePath);
+                    //console.log('File written!', filePath);
                     resolve();
                 });
             
@@ -69,7 +69,7 @@ export async function ogaBuffer2Mp3Buffer(buffer){
 
     outputData = ffmpeg.FS('readFile', outputFileName);
 
-    console.log(outputData);
+    //console.log(outputData);
 
     ffmpeg.FS('unlink', inputFileName);
     ffmpeg.FS('unlink', outputFileName);

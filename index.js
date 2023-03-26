@@ -79,6 +79,7 @@ bot.on("voice", async ctx => {
         model: "gpt-3.5-turbo",
         messages: messages,
     });
+    console.log(completion);
     const answer = completion.data.choices[0].message.content;
 
     messages.push({ role: 'system', content: answer });
