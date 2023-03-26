@@ -9,7 +9,7 @@ export async function getFileFromVoice(bot, voice){
 
     const fileLink = `https://api.telegram.org/file/bot${process.env.BOT_TOKEN}/${fileInfo.file_path}`;
 
-    const filePath = `/tmp/${fileInfo.file_path}`;
+    const filePath = `/tmp/${fileId}.oga`;
 
     await downloadFile(fileLink, filePath);
     console.log('after download', filePath);
