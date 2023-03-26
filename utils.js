@@ -68,6 +68,9 @@ export async function ogaBuffer2Mp3Buffer(buffer){
     );
 
     outputData = ffmpeg.FS('readFile', outputFileName);
+
+    console.log(outputData);
+    
     ffmpeg.FS('unlink', inputFileName);
     ffmpeg.FS('unlink', outputFileName);
 
