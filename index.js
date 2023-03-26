@@ -43,12 +43,11 @@ bot.on("text", async ctx => {
     const answer = completion.data.choices[0].message.content;
 
     messages.push({ role: 'system', content: answer });
-    //console.log(question, answer);
+    console.log([question, answer]);
 
     if(messages.length > 10){
         messages = messages.slice(-10);
     }
-    console.log('messages', messages);
 
     cache.put(chat_id, messages, 10*60*1000);
 
@@ -62,8 +61,6 @@ bot.on("voice", async ctx => {
     const filePath = await getFileFromVoice(bot, voice);
 
     console.log(filePath);
-
-    console.log(ctx.message);
 })
 
 app.listen(process.env.PORT, () => console.log("Listening on port", process.env.PORT));
