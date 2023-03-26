@@ -2,6 +2,7 @@ import express from "express";
 import { Telegraf } from "telegraf";
 import * as dotenv from 'dotenv';
 import { default as cache } from 'memory-cache';
+import { getFileFromVoice } from './utils';
 
 dotenv.config();
 
@@ -55,7 +56,12 @@ bot.on("text", async ctx => {
 });
 
 bot.on("voice", async ctx => {
-    const message = ctx.message;
+
+    const voice = ctx.message.voice
+
+    const filePath = await getFileFromVoice(voice);
+
+    console.log(filePath);
 
     console.log(message);
 })
