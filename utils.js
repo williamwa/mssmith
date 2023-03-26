@@ -52,14 +52,14 @@ export async function fetchFileToAB(fileUrl){
     return await fetchFile(fileUrl);
 }
 
-export async function ogaBuffer2Mp3Buffer(ab){
+export async function ogaBuffer2Mp3Buffer(buffer){
     const ffmpeg = await getFFmpeg();
 
     const inputFileName = `input.oga`;
     const outputFileName = `output.mp3`;
     let outputData = null;
 
-    ffmpeg.FS('writeFile', inputFileName, ab);
+    ffmpeg.FS('writeFile', inputFileName, new Uint8Array(buffer));
 
     await ffmpeg.run(
         '-i', inputFileName,
