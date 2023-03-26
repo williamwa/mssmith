@@ -63,7 +63,7 @@ bot.on("voice", async ctx => {
 
     console.log(filePath);
 
-    console.log(message);
+    console.log(ctx.message);
 })
 
 app.listen(process.env.PORT, () => console.log("Listening on port", process.env.PORT));
