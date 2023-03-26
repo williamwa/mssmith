@@ -58,7 +58,7 @@ bot.on("voice", async ctx => {
 
     const voice = ctx.message.voice;
 
-    const mp3file = getFileFromVoiceAndConvertToMp3(bot, voice);
+    const mp3file = await getFileFromVoiceAndConvertToMp3(bot, voice);
 
     console.log('mp3 file', mp3file);
 
