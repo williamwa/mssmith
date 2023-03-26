@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import * as https from "https";
+import * as got from 'got';
 
 export async function getFileFromVoice(bot, voice){
     const fileId = voice.file_id
@@ -12,6 +12,7 @@ export async function getFileFromVoice(bot, voice){
     const filePath = `/tmp/${fileInfo.file_path}`;
 
     await downloadFile(fileLink, filePath);
+    console.log('after download', filePath);
 
     return filePath;
 }
@@ -19,21 +20,12 @@ export async function getFileFromVoice(bot, voice){
 export async function downloadFile(fileUrl, filePath) {
 
   try {
-    const response = await https.get(fileUrl);
-    const writeStream = fs.createWriteStream(filePath);
 
-    response.pipe(writeStream);
-
-    return new Promise((resolve, reject) => {
-      writeStream.on('finish', () => {
-        console.log(`File downloaded and saved as ${filePath}`);
-        resolve();
-      });
-
-      writeStream.on('error', (error) => {
-        reject(error);
-      });
-    });
+    return got.stream(fileUrl)
+        .pipe(fs.createWriteStream(filePath))
+        .on('close', function () {
+            console.log('File written!', filePath);
+        });
   } catch (error) {
     console.error(`Error downloading file: ${error.message}`);
   }
