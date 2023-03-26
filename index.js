@@ -30,7 +30,7 @@ bot.start(ctx => {
 bot.on("text", async ctx => {
     const question = ctx.message.text;
 
-    console.log('message', ctx.message);
+    //console.log('message', ctx.message);
     const chat_id = ctx.message.chat.id;
 
     const cached_messages = cache.get(chat_id);
@@ -61,12 +61,37 @@ bot.on("voice", async ctx => {
 
     const mp3file = await getFileFromVoiceAndConvertToMp3(bot, voice);
 
-    console.log('mp3 file', mp3file);
+    //console.log('mp3 file', mp3file);
 
     const transcription = await openai.createTranscription(fs.createReadStream(mp3file), 'whisper-1');
 
-    console.log(transcription);
+    //console.log(transcription?.data?.text);
 
-})
+    const question = transcription?.data?.text;
+
+    const chat_id = ctx.message.chat.id;
+
+    const cached_messages = cache.get(chat_id);
+    let messages = cached_messages ? cached_messages : [];
+    messages.push({ role: 'user', content: question });
+
+    const completion = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: messages,
+    });
+    const answer = completion.data.choices[0].message.content;
+
+    messages.push({ role: 'system', content: answer });
+    console.log([question, answer]);
+
+    if(messages.length > 10){
+        messages = messages.slice(-10);
+    }
+
+    cache.put(chat_id, messages, 10*60*1000);
+
+    ctx.reply(answer)
+
+});
 
 app.listen(process.env.PORT, () => console.log("Listening on port", process.env.PORT));
