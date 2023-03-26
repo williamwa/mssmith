@@ -62,9 +62,8 @@ export async function ogaBuffer2Mp3Buffer(ab){
     ffmpeg.FS('writeFile', inputFileName, ab);
 
     await ffmpeg.run(
-        '-ss', '00:00:01.000',
         '-i', inputFileName,
-        '-frames:v', '1',
+        '-acodec', 'libmp3lame',
         outputFileName
     );
 
