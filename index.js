@@ -2,7 +2,7 @@ import express from "express";
 import { Telegraf } from "telegraf";
 import * as dotenv from 'dotenv';
 import { default as cache } from 'memory-cache';
-import { getFileFromVoice, fetchFileToAB, ogaBuffer2Mp3Buffer } from './utils.js';
+import { getFileFromVoiceAndConvertToMp3 } from './utils.js';
 
 dotenv.config();
 
@@ -56,17 +56,16 @@ bot.on("text", async ctx => {
 
 bot.on("voice", async ctx => {
 
-    const voice = ctx.message.voice
+    const voice = ctx.message.voice;
 
-    const fileLink = await getFileFromVoice(bot, voice);
+    const mp3file = getFileFromVoiceAndConvertToMp3(bot, voice);
 
-    const ab = await fetchFileToAB(fileLink);
+    console.log('mp3 file', mp3file);
 
-    const mp3ab = await ogaBuffer2Mp3Buffer(ab);
-
-    const transcription = await openai.createTranscription(mp3ab, 'whisper-1');
+    const transcription = await openai.createTranscription(mp3file, 'whisper-1');
 
     console.log(transcription);
+
 })
 
 app.listen(process.env.PORT, () => console.log("Listening on port", process.env.PORT));

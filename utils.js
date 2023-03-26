@@ -73,3 +73,20 @@ export async function ogaBuffer2Mp3Buffer(ab){
 
     return outputData;
 }
+
+export async function abToFile(ab, file){
+    const buffer = Buffer.from(arrayBuffer);
+
+    return await fs.writeFile(filePath, buffer);
+}
+
+export async function getFileFromVoiceAndConvertToMp3(bot, voice){
+
+    const fileLink = await getFileFromVoice(bot, voice);
+
+    const ab = await fetchFileToAB(fileLink);
+
+    const mp3file = await abToFile(ab, `/tmp/${vovoice.file_id}.mp3`);
+
+    return mp3file;
+}
