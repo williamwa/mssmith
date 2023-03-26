@@ -77,7 +77,15 @@ export async function ogaBuffer2Mp3Buffer(ab){
 export async function abToFile(ab, file){
     const buffer = Buffer.from(arrayBuffer);
 
-    return await fs.writeFile(filePath, buffer);
+    return new Promise((resolve, reject) => {
+        fs.writeFile(filePath, buffer, (err) => {
+            if(err){
+                console.log('write file error', error);
+                return reject();
+            }
+            resolve(file);
+        });
+    });
 }
 
 export async function getFileFromVoiceAndConvertToMp3(bot, voice){
