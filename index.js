@@ -2,7 +2,7 @@ import express from "express";
 import { Telegraf } from "telegraf";
 import * as dotenv from 'dotenv';
 import { default as cache } from 'memory-cache';
-import { getFileFromVoice } from './utils';
+import { getFileFromVoice } from './utils.js';
 
 dotenv.config();
 

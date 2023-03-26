@@ -1,5 +1,5 @@
-const https = require('https');
-const fs = require('fs');
+import * as fs from "fs";
+import * as https from "https";
 
 export async function getFileFromVoice(bot, voice){
     const fileId = voice.file_id
