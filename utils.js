@@ -75,10 +75,10 @@ export async function ogaBuffer2Mp3Buffer(ab){
 }
 
 export async function abToFile(ab, file){
-    const buffer = Buffer.from(arrayBuffer);
+    const buffer = Buffer.from(ab);
 
     return new Promise((resolve, reject) => {
-        fs.writeFile(filePath, buffer, (err) => {
+        fs.writeFile(file, buffer, (err) => {
             if(err){
                 console.log('write file error', error);
                 return reject();
