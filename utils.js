@@ -88,13 +88,32 @@ export async function abToFile(ab, file){
     });
 }
 
+export async function fileToab(file){
+    
+    return new Promise((resolve, reject) => {
+        fs.readFile(file, (err, data) => {
+            if(err){
+                console.log('read file error', error);
+                return reject();
+            }
+            resolve(data);
+        });
+    });
+
+}
+
 export async function getFileFromVoiceAndConvertToMp3(bot, voice){
 
     const fileLink = await getFileFromVoice(bot, voice);
 
-    const ab = await fetchFileToAB(fileLink);
+    const filePath = `/tmp/${voice.file_id}.oga`;
+    await downloadFile(fileLink, filePath);
 
-    const mp3file = await abToFile(ab, `/tmp/${voice.file_id}.mp3`);
+    const ogaab = fileToab(filePath);
+
+    const mp3ab = ogaBuffer2Mp3Buffer(ogaab);
+
+    const mp3file = await abToFile(mp3ab, `/tmp/${voice.file_id}.mp3`);
 
     return mp3file;
 }
