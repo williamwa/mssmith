@@ -54,4 +54,10 @@ bot.on("text", async ctx => {
     ctx.reply(answer)
 });
 
+bot.on("voice", async ctx => {
+    const message = ctx.message;
+
+    console.log(message);
+})
+
 app.listen(process.env.PORT, () => console.log("Listening on port", process.env.PORT));
