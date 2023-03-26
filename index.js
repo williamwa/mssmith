@@ -60,13 +60,13 @@ bot.on("voice", async ctx => {
 
     const fileLink = await getFileFromVoice(bot, voice);
 
-    console.log(fileLink);
-
     const ab = await fetchFileToAB(fileLink);
 
     const mp3ab = await ogaBuffer2Mp3Buffer(ab);
 
-    console.log('mp3', mp3ab);
+    const transcription = await openai.createTranscription(mp3ab, 'whisper-1');
+
+    console.log(transcription);
 })
 
 app.listen(process.env.PORT, () => console.log("Listening on port", process.env.PORT));
