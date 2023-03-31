@@ -3,7 +3,7 @@ import got from 'got';
 import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 import sdk from "microsoft-cognitiveservices-speech-sdk";
 
-const ffmpegInstance = createFFmpeg({ log: true });
+const ffmpegInstance = createFFmpeg({ log: false });
 let ffmpegLoadingPromise = ffmpegInstance.load();
 
 export async function getFFmpeg() {
@@ -158,7 +158,6 @@ export async function convertMp3ToOga(mp3file){
 
     return ogafile;
 }
-
 
 export async function tts(text, lang, audioFile){
 
