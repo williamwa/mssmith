@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import { Telegraf } from "telegraf";
 import * as dotenv from 'dotenv';
 import { default as cache } from 'memory-cache';
-import { getFileFromVoiceAndConvertToMp3, tts } from './utils.js';
+import { getFileFromVoiceAndConvertToMp3, tts, convertMp3ToOga } from './utils.js';
 import { detect } from 'tinyld';
 
 dotenv.config();
@@ -92,11 +92,15 @@ bot.on("voice", async ctx => {
     const lang = detect(answer);
 
     if(lang == 'zh' || lang == 'en'){
-        const answer_mp3file = mp3file.replace('.mp3', '_answer.mp3');
+        const answer_mp3file = mp3file.replace('.mp3', '_answer.oga');
         console.log(answer_mp3file);
         await tts(answer, lang, answer_mp3file);
 
         ctx.replyWithAudio({source: answer_mp3file});
+
+        //const answer_ogafile = await convertMp3ToOga(answer_mp3file);
+        //console.log(answer_ogafile);
+        //ctx.replyWithAudio({source: answer_ogafile});
     }else{
         ctx.reply(answer);
     }

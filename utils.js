@@ -78,6 +78,30 @@ export async function ogaBuffer2Mp3Buffer(buffer){
     return outputData;
 }
 
+export async function mp3Buffer2OgaBuffer(buffer){
+    const ffmpeg = await getFFmpeg();
+
+    const inputFileName = `input.mp3`;
+    const outputFileName = `output.oga`;
+    let outputData = null;
+
+    ffmpeg.FS('writeFile', inputFileName, new Uint8Array(buffer));
+
+    await ffmpeg.run(
+        '-i', inputFileName,
+        '-c:a libvorbis', 
+        '-q:a 4',
+        outputFileName
+    );
+
+    outputData = ffmpeg.FS('readFile', outputFileName);
+
+    ffmpeg.FS('unlink', inputFileName);
+    ffmpeg.FS('unlink', outputFileName);
+
+    return outputData;
+}
+
 export async function abToFile(ab, file){
     const buffer = Buffer.from(ab);
 
@@ -121,6 +145,20 @@ export async function getFileFromVoiceAndConvertToMp3(bot, voice){
 
     return mp3file;
 }
+
+export async function convertMp3ToOga(mp3file){
+
+    const mp3ab = await fileToab(mp3file);
+
+    const ogaab = await mp3Buffer2OgaBuffer(mp3ab);
+
+    const ogaFileName = mp3file.replace('.mp3', '.oga');
+
+    const ogafile = await abToFile(ogaab, ogaFileName);
+
+    return ogafile;
+}
+
 
 export async function tts(text, lang, audioFile){
 
