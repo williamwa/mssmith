@@ -62,11 +62,9 @@ bot.on("voice", async ctx => {
 
     const mp3file = await getFileFromVoiceAndConvertToMp3(bot, voice);
 
-    //console.log('mp3 file', mp3file);
+    console.log('mp3 file', mp3file);
 
     const transcription = await openai.createTranscription(fs.createReadStream(mp3file), 'whisper-1');
-
-    //console.log(transcription?.data?.text);
 
     const question = transcription?.data?.text;
 
@@ -80,7 +78,6 @@ bot.on("voice", async ctx => {
         model: "gpt-3.5-turbo",
         messages: messages,
     });
-    console.log(completion);
     const answer = completion.data.choices[0].message.content;
 
     messages.push({ role: 'system', content: answer });
@@ -96,6 +93,7 @@ bot.on("voice", async ctx => {
 
     if(lang == 'zh' || lang == 'en'){
         const answer_mp3file = mp3file.replace('.mp3', '_answer.mp3');
+        console.log(answer_mp3file);
         await tts(answer, lang, answer_mp3file);
 
         ctx.replyWithAudio({source: answer_mp3file});

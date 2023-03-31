@@ -122,7 +122,7 @@ export async function getFileFromVoiceAndConvertToMp3(bot, voice){
     return mp3file;
 }
 
-export async function tts(text, lang, mp3file){
+export async function tts(text, lang, audioFile){
 
     const speechConfig = sdk.SpeechConfig.fromSubscription(process.env.SPEECH_KEY, process.env.SPEECH_REGION);
     const audioConfig = sdk.AudioConfig.fromAudioFileOutput(audioFile);
@@ -133,7 +133,7 @@ export async function tts(text, lang, mp3file){
     // Create the speech synthesizer.
     var synthesizer = new sdk.SpeechSynthesizer(speechConfig, audioConfig);
 
-    console.log("Now synthesizing to: " + mp3file);
+    console.log("Now synthesizing to: " + audioFile);
 
     return new Promise((resolve, reject) => {
         // Start the synthesizer and wait for a result.
