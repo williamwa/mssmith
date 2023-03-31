@@ -141,7 +141,7 @@ export async function getFileFromVoiceAndConvertToMp3(bot, voice){
 
     const mp3ab = await ogaBuffer2Mp3Buffer(ogaab);
 
-    const mp3file = await abToFile(mp3ab, `/tmp/${voice.file_id}.mp3`);
+    const mp3file = await abToFile(mp3ab, `/tmp/${voice.file_unique_id}.mp3`);
 
     return mp3file;
 }
