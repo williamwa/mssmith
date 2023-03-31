@@ -98,7 +98,7 @@ bot.on("voice", async ctx => {
         const answer_mp3file = mp3file.replace('.mp3', '_answer.mp3');
         await tts(answer, lang, answer_mp3file);
 
-        ctx.replyWithAudio({source: anser_mp3file})
+        ctx.replyWithAudio({source: answer_mp3file});
     }else{
         ctx.reply(answer);
     }
