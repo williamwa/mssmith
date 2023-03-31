@@ -127,16 +127,19 @@ export async function tts(text, lang, audioFile){
     const speechConfig = sdk.SpeechConfig.fromSubscription(process.env.SPEECH_KEY, process.env.SPEECH_REGION);
     const audioConfig = sdk.AudioConfig.fromAudioFileOutput(audioFile);
 
-    // The language of the voice that speaks.
-    speechConfig.speechSynthesisVoiceName = "en-US-JennyNeural"; 
+    if(lang == 'zh'){
+        speechConfig.speechSynthesisLanguage = "zh-CN";
+        speechConfig.speechSynthesisVoiceName = "zh-CN-XiaoxiaoNeural";
+    }else{
+        speechConfig.speechSynthesisLanguage = "en-US";
+        speechConfig.speechSynthesisVoiceName = "en-US-JennyNeural";
+    }
 
-    // Create the speech synthesizer.
     var synthesizer = new sdk.SpeechSynthesizer(speechConfig, audioConfig);
 
     console.log("Now synthesizing to: " + audioFile);
 
     return new Promise((resolve, reject) => {
-        // Start the synthesizer and wait for a result.
         synthesizer.speakTextAsync(text, function (result) {
             if (result.reason === sdk.ResultReason.SynthesizingAudioCompleted) {
                 console.log("synthesis finished.");
