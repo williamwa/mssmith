@@ -4,6 +4,7 @@ import { Telegraf } from "telegraf";
 import * as dotenv from 'dotenv';
 import { default as cache } from 'memory-cache';
 import { getFileFromVoiceAndConvertToMp3 } from './utils.js';
+import { detect } from 'tinyld'
 
 dotenv.config();
 
@@ -90,8 +91,10 @@ bot.on("voice", async ctx => {
     }
 
     cache.put(chat_id, messages, 10*60*1000);
+    
+    const lang = detect(answer);
 
-    ctx.reply(answer)
+    ctx.reply(lang + ':' + answer);
 
 });
 
