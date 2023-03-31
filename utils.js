@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import got from 'got';
 import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
+import sdk from "microsoft-cognitiveservices-speech-sdk";
 
 const ffmpegInstance = createFFmpeg({ log: true });
 let ffmpegLoadingPromise = ffmpegInstance.load();
@@ -119,4 +120,38 @@ export async function getFileFromVoiceAndConvertToMp3(bot, voice){
     const mp3file = await abToFile(mp3ab, `/tmp/${voice.file_id}.mp3`);
 
     return mp3file;
+}
+
+export async function tts(text, lang, mp3file){
+
+    const speechConfig = sdk.SpeechConfig.fromSubscription(process.env.SPEECH_KEY, process.env.SPEECH_REGION);
+    const audioConfig = sdk.AudioConfig.fromAudioFileOutput(audioFile);
+
+    // The language of the voice that speaks.
+    speechConfig.speechSynthesisVoiceName = "en-US-JennyNeural"; 
+
+    // Create the speech synthesizer.
+    var synthesizer = new sdk.SpeechSynthesizer(speechConfig, audioConfig);
+
+    console.log("Now synthesizing to: " + mp3file);
+
+    return new Promise((resolve, reject) => {
+        // Start the synthesizer and wait for a result.
+        synthesizer.speakTextAsync(text, function (result) {
+            if (result.reason === sdk.ResultReason.SynthesizingAudioCompleted) {
+                console.log("synthesis finished.");
+                resolve();
+            } else {
+                console.error("Speech synthesis canceled", result.errorDetails);
+                reject();
+            }
+            synthesizer.close();
+            synthesizer = null;
+        }, function (err) {
+            console.trace("err - " + err);
+            synthesizer.close();
+            synthesizer = null;
+            reject();
+        });
+    });
 }
