@@ -1,0 +1,38 @@
+This project is a telegram bot which can talk with you.
+
+- Using gpt-3.5-turbo api
+- Using whisper api to convert audio to text
+- Using azure text to speech api to convert text to audio
+
+Deploy:
+
+Step 1: Get API keys:
+
+- Create a Telegram bot and get the token
+- Get openAI API key
+- Create Azure Recognitive Service resource, get API key and region
+
+Step 2: Run bot webhook service:
+
+- create a .env file with following content:
+
+```
+BOT_TOKEN=xxxxxx
+
+DOMAIN=a web domain for telegram web hook
+PORT=443
+
+OPENAI_API_KEY=sk-xxxxx
+
+SPEECH_KEY=xxxxx
+SPEECH_REGION=yourreagion
+```
+
+- npm install
+- node index.js
+
+Step 3: Set webhook for your bot:
+
+- send a reuqest to following url to set webhook: 
+
+https://api.telegram.org/bot{BOT_TIKEN}/setWebhook?url=https://{DOMAIN}/telegram
