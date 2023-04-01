@@ -9,8 +9,8 @@ Deploy:
 Step 1: Get API keys:
 
 - Create a Telegram bot and get the token
-- Get openAI API key
-- Create Azure Recognitive Service resource, get API key and region
+- Get OpenAI API key
+- Create Azure Cognitive Service -> Speech Service, get API key and region
 
 Step 2: Run bot webhook service:
 
